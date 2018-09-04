@@ -1,0 +1,15 @@
+type User {
+  id: ID! @unique
+  name: String!
+}
+
+type Chat {
+  id: ID! @unique
+  messages: [Message!]! @relation(name: "ChatMessages")
+}
+
+type Message {
+  id: ID! @unique
+  body: String!
+  chat: Chat! @relation(name: "ChatMessages")
+}
