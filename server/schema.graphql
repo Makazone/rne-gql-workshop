@@ -1,0 +1,29 @@
+input UserInput {
+  id: ID!
+  name: String
+}
+
+type Mutation {
+  createUser(data: UserInput): User
+}
+
+type Query {
+  helloWorld: String!
+  getUser(id: ID!): User
+}
+
+type User {
+  id: ID!
+  name: String!
+}
+
+type Message {
+  id: ID!
+  body: String!
+  author: User!
+}
+
+type Chat {
+  id: ID!
+  messages: [Message!]!
+}

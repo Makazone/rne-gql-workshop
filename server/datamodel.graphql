@@ -1,6 +1,7 @@
 type User {
   id: ID! @unique
   name: String!
+  messages: [Message!]! @relation(name: "UserMessage")
 }
 
 type Chat {
@@ -12,4 +13,5 @@ type Message {
   id: ID! @unique
   body: String!
   chat: Chat! @relation(name: "ChatMessages")
+  author: User! @relation(name: "UserMessage")
 }
