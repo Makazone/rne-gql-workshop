@@ -1,29 +1,9 @@
-input UserInput {
-  id: ID!
-  name: String
+# import Chat from "./generated/prisma.graphql"
+
+type Query {
+  _: String
 }
 
 type Mutation {
-  createUser(data: UserInput): User
-}
-
-type Query {
-  helloWorld: String!
-  getUser(id: ID!): User
-}
-
-type User {
-  id: ID!
-  name: String!
-}
-
-type Message {
-  id: ID!
-  body: String!
-  author: User!
-}
-
-type Chat {
-  id: ID!
-  messages: [Message!]!
+  postMessage(body: String!, chatId: ID!): Chat
 }

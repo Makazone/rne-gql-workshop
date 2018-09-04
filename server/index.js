@@ -6,13 +6,34 @@ const typeDefs = importSchema("schema.graphql");
 
 // Provide resolver functions for your schema fields
 const resolvers = {
-  Query: {
-    helloWorld: () => {
-      return "Hello, Wroclaw!";
-    },
-    getUser: (root, args, context, info) => {
-      const { id } = args;
-      return users[id];
+  Query: { _: () => "none " },
+  Mutation: {
+    postMessage: async (_, args, context, info) => {
+      const { body, chatId } = args;
+      const { prisma } = context;
+
+      const result = await prisma.mutation.createMessage(
+        {
+          data: {
+            body,
+            author: {
+              connect: {
+                id: "cjlnsxyrb5rw00b72k07xfiiy"
+              }
+            },
+            chat: {
+              connect: {
+                id: chatId
+              }
+            }
+          }
+        },
+        info
+      );
+
+      console.log(result);
+
+      return result;
     }
   }
 };
@@ -23,7 +44,7 @@ const server = new ApolloServer({
   context: async () => {
     return {
       prisma: new Prisma({
-        typeDefs: "generated/prisma.graphql",
+        typeDefs: "./generated/prisma.graphql",
         endpoint: "https://eu1.prisma.sh/makar/prisma/dev"
       })
     };
